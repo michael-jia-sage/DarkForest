@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DAD99BC1CEA968F00F31B07 /* RoundedBirdsIcons_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD99B31CEA968F00F31B07 /* RoundedBirdsIcons_1.jpg */; };
+		0DAD99BD1CEA968F00F31B07 /* RoundedBirdsIcons_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD99B41CEA968F00F31B07 /* RoundedBirdsIcons_2.jpg */; };
+		0DAD99BE1CEA968F00F31B07 /* RoundedBirdsIcons_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD99B51CEA968F00F31B07 /* RoundedBirdsIcons_3.jpg */; };
+		0DAD99BF1CEA968F00F31B07 /* RoundedBirdsIcons_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD99B61CEA968F00F31B07 /* RoundedBirdsIcons_4.jpg */; };
+		0DAD99C21CEA968F00F31B07 /* RoundedBirdsIcons_7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD99B91CEA968F00F31B07 /* RoundedBirdsIcons_7.jpg */; };
+		0DAD99C31CEA968F00F31B07 /* RoundedBirdsIcons_8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD99BA1CEA968F00F31B07 /* RoundedBirdsIcons_8.jpg */; };
+		0DAD99C71CEAC08300F31B07 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DAD99C61CEAC08300F31B07 /* GameScene.cpp */; };
+		0DAD99D11CEBEC9D00F31B07 /* Boss.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD99CE1CEBEC9D00F31B07 /* Boss.png */; };
+		0DAD99D21CEBEC9D00F31B07 /* Enemy.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD99CF1CEBEC9D00F31B07 /* Enemy.png */; };
+		0DAD99D31CEBEC9D00F31B07 /* Player.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD99D01CEBEC9D00F31B07 /* Player.png */; };
+		0DAD99D71CEBF25D00F31B07 /* SneakyButtonSkinnedBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DAD99D61CEBF25D00F31B07 /* SneakyButtonSkinnedBase.cpp */; };
+		0DAD99DA1CEBF2A600F31B07 /* SneakyButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DAD99D91CEBF2A600F31B07 /* SneakyButton.cpp */; };
+		0DAD99DD1CEBF3F900F31B07 /* SneakyJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DAD99DC1CEBF3F900F31B07 /* SneakyJoystick.cpp */; };
+		0DAD99E01CEBF45E00F31B07 /* SneakyJoystickSkinnedBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DAD99DF1CEBF45E00F31B07 /* SneakyJoystickSkinnedBase.cpp */; };
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -103,6 +117,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0DAD99B31CEA968F00F31B07 /* RoundedBirdsIcons_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundedBirdsIcons_1.jpg; sourceTree = "<group>"; };
+		0DAD99B41CEA968F00F31B07 /* RoundedBirdsIcons_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundedBirdsIcons_2.jpg; sourceTree = "<group>"; };
+		0DAD99B51CEA968F00F31B07 /* RoundedBirdsIcons_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundedBirdsIcons_3.jpg; sourceTree = "<group>"; };
+		0DAD99B61CEA968F00F31B07 /* RoundedBirdsIcons_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundedBirdsIcons_4.jpg; sourceTree = "<group>"; };
+		0DAD99B91CEA968F00F31B07 /* RoundedBirdsIcons_7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundedBirdsIcons_7.jpg; sourceTree = "<group>"; };
+		0DAD99BA1CEA968F00F31B07 /* RoundedBirdsIcons_8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundedBirdsIcons_8.jpg; sourceTree = "<group>"; };
+		0DAD99C51CEAC06A00F31B07 /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		0DAD99C61CEAC08300F31B07 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
+		0DAD99CE1CEBEC9D00F31B07 /* Boss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Boss.png; sourceTree = "<group>"; };
+		0DAD99CF1CEBEC9D00F31B07 /* Enemy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Enemy.png; sourceTree = "<group>"; };
+		0DAD99D01CEBEC9D00F31B07 /* Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Player.png; sourceTree = "<group>"; };
+		0DAD99D51CEBF24A00F31B07 /* SneakyButtonSkinnedBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyButtonSkinnedBase.h; sourceTree = "<group>"; };
+		0DAD99D61CEBF25D00F31B07 /* SneakyButtonSkinnedBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SneakyButtonSkinnedBase.cpp; sourceTree = "<group>"; };
+		0DAD99D81CEBF29700F31B07 /* SneakyButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyButton.h; sourceTree = "<group>"; };
+		0DAD99D91CEBF2A600F31B07 /* SneakyButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SneakyButton.cpp; sourceTree = "<group>"; };
+		0DAD99DB1CEBF3E900F31B07 /* SneakyJoystick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyJoystick.h; sourceTree = "<group>"; };
+		0DAD99DC1CEBF3F900F31B07 /* SneakyJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SneakyJoystick.cpp; sourceTree = "<group>"; };
+		0DAD99DE1CEBF44900F31B07 /* SneakyJoystickSkinnedBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyJoystickSkinnedBase.h; sourceTree = "<group>"; };
+		0DAD99DF1CEBF45E00F31B07 /* SneakyJoystickSkinnedBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SneakyJoystickSkinnedBase.cpp; sourceTree = "<group>"; };
 		1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -223,6 +256,21 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		0DAD99D41CEBF21800F31B07 /* JoyStick */ = {
+			isa = PBXGroup;
+			children = (
+				0DAD99D51CEBF24A00F31B07 /* SneakyButtonSkinnedBase.h */,
+				0DAD99D61CEBF25D00F31B07 /* SneakyButtonSkinnedBase.cpp */,
+				0DAD99D81CEBF29700F31B07 /* SneakyButton.h */,
+				0DAD99D91CEBF2A600F31B07 /* SneakyButton.cpp */,
+				0DAD99DB1CEBF3E900F31B07 /* SneakyJoystick.h */,
+				0DAD99DC1CEBF3F900F31B07 /* SneakyJoystick.cpp */,
+				0DAD99DE1CEBF44900F31B07 /* SneakyJoystickSkinnedBase.h */,
+				0DAD99DF1CEBF45E00F31B07 /* SneakyJoystickSkinnedBase.cpp */,
+			);
+			name = JoyStick;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,11 +332,20 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0DAD99CE1CEBEC9D00F31B07 /* Boss.png */,
+				0DAD99CF1CEBEC9D00F31B07 /* Enemy.png */,
+				0DAD99D01CEBEC9D00F31B07 /* Player.png */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
 				46880B7619C43A67006E1F66 /* CloseNormal.png */,
 				46880B7719C43A67006E1F66 /* CloseSelected.png */,
 				46880B7A19C43A67006E1F66 /* HelloWorld.png */,
+				0DAD99B31CEA968F00F31B07 /* RoundedBirdsIcons_1.jpg */,
+				0DAD99B41CEA968F00F31B07 /* RoundedBirdsIcons_2.jpg */,
+				0DAD99B51CEA968F00F31B07 /* RoundedBirdsIcons_3.jpg */,
+				0DAD99B61CEA968F00F31B07 /* RoundedBirdsIcons_4.jpg */,
+				0DAD99B91CEA968F00F31B07 /* RoundedBirdsIcons_7.jpg */,
+				0DAD99BA1CEA968F00F31B07 /* RoundedBirdsIcons_8.jpg */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -297,10 +354,13 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0DAD99D41CEBF21800F31B07 /* JoyStick */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
+				0DAD99C51CEAC06A00F31B07 /* GameScene.h */,
+				0DAD99C61CEAC08300F31B07 /* GameScene.cpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -449,22 +509,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
+				0DAD99C21CEA968F00F31B07 /* RoundedBirdsIcons_7.jpg in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
+				0DAD99BC1CEA968F00F31B07 /* RoundedBirdsIcons_1.jpg in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
+				0DAD99D31CEBEC9D00F31B07 /* Player.png in Resources */,
+				0DAD99D11CEBEC9D00F31B07 /* Boss.png in Resources */,
+				0DAD99D21CEBEC9D00F31B07 /* Enemy.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
+				0DAD99C31CEA968F00F31B07 /* RoundedBirdsIcons_8.jpg in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
+				0DAD99BD1CEA968F00F31B07 /* RoundedBirdsIcons_2.jpg in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
+				0DAD99BF1CEA968F00F31B07 /* RoundedBirdsIcons_4.jpg in Resources */,
+				0DAD99BE1CEA968F00F31B07 /* RoundedBirdsIcons_3.jpg in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
@@ -494,10 +563,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DAD99DA1CEBF2A600F31B07 /* SneakyButton.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				0DAD99DD1CEBF3F900F31B07 /* SneakyJoystick.cpp in Sources */,
+				0DAD99D71CEBF25D00F31B07 /* SneakyButtonSkinnedBase.cpp in Sources */,
+				0DAD99C71CEAC08300F31B07 /* GameScene.cpp in Sources */,
+				0DAD99E01CEBF45E00F31B07 /* SneakyJoystickSkinnedBase.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
