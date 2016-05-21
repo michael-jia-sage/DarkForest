@@ -14,10 +14,12 @@ USING_NS_CC;
 Scene* GameScene::createScene()
 {
     // 'scene' is an autorelease object
-    auto scene = Scene::create();
+    auto scene = Scene::createWithPhysics();
+    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     
     // 'layer' is an autorelease object
     auto layer = GameScene::create();
+    layer->SetPhysicsWorld(scene->getPhysicsWorld());
     
     // add layer as a child to scene
     scene->addChild(layer);
@@ -38,16 +40,32 @@ bool GameScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
+    /////////////////////////////
+    // add edge
+    auto edgeBody = PhysicsBody::createEdgeBox(visibleSize, PHYSICSBODY_MATERIAL_DEFAULT, 3);
+    auto edgeNode = Node::create();
+    edgeNode->setPosition( Point(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    edgeNode->setPhysicsBody(edgeBody);
+    this->addChild(edgeNode);
+    
     
     /////////////////////////////
     // add player
-    auto player = Sprite::create("Player.png");
+    player = Sprite::create("Player.png");
     player->setPosition(Vec2(visibleSize.width/2 + origin.x - 150, visibleSize.height/2 + origin.y));
+    playerPhysicsBody = PhysicsBody::createCircle(player->getContentSize().width/2, PhysicsMaterial(0.0f, 1.0f, 0.0f));
+    //playerPhysicsBody->setDynamic(false);
+    playerPhysicsBody->setGravityEnable(false);
+    //playerPhysicsBody->setVelocity(Vec2(cocos2d::random(-500,500),
+    //                              cocos2d::random(-500,500)));
+    //playerPhysicsBody->setTag(DRAG_BODYS_TAG);
+    
+    player->setPhysicsBody(playerPhysicsBody);
     this->addChild(player, 0);
     
     /////////////////////////////
     // add enemy
-    auto enemy = Sprite::create("Enemy.png");
+    enemy = Sprite::create("Enemy.png");
     enemy->setPosition(Vec2(visibleSize.width/2 + origin.x + 150, visibleSize.height/2 + origin.y));
     this->addChild(enemy, 0);
     
@@ -56,16 +74,16 @@ bool GameScene::init()
     // add button to the right corner
     Rect attackButtonDimensions = Rect(0, 0, 64.0f, 64.0f);
     Point attackButtonPosition;
-    attackButtonPosition = Vec2(visibleSize.width * 0.8f, visibleSize.height * 0.2f);
+    attackButtonPosition = Vec2(visibleSize.width * 0.85f, visibleSize.height * 0.25f);
     
     SneakyButtonSkinnedBase *attackButtonBase = new SneakyButtonSkinnedBase();
     attackButtonBase->init();
     attackButtonBase->setPosition(attackButtonPosition);
     
-    attackButtonBase->setDefaultSprite(Sprite::create("Player.png"));
-    attackButtonBase->setActivatedSprite(Sprite::create("Enemy.png"));
-    attackButtonBase->setDisabledSprite(Sprite::create("Player.png"));
-    attackButtonBase->setPressSprite(Sprite::create("Boss.png"));
+    attackButtonBase->setDefaultSprite(Sprite::create("FireButton.png"));
+    attackButtonBase->setActivatedSprite(Sprite::create("FireButtonDown.png"));
+    attackButtonBase->setDisabledSprite(Sprite::create("FireButton.png"));
+    attackButtonBase->setPressSprite(Sprite::create("FireButtonDown.png"));
     
     SneakyButton *aAttackButton = new SneakyButton();
     aAttackButton->initWithRect(attackButtonDimensions);
@@ -74,7 +92,7 @@ bool GameScene::init()
     attackButtonBase->setButton(aAttackButton);
     attackButtonBase->setPosition(attackButtonPosition);
     
-    auto attackButton = attackButtonBase->getButton();
+    attackButton = attackButtonBase->getButton();
     attackButton->retain();
     this->addChild(attackButtonBase, 0);
     
@@ -89,13 +107,13 @@ bool GameScene::init()
     joystickBaseDimensions = Rect(0, 0, 160.0f, 160.0f);
     
     Point joystickBasePosition;
-    joystickBasePosition = Vec2(visibleSize.width * 0.2f, visibleSize.height*0.2f);
+    joystickBasePosition = Vec2(visibleSize.width * 0.15f, visibleSize.height*0.3f);
     
     SneakyJoystickSkinnedBase *joystickBase = new SneakyJoystickSkinnedBase();
     joystickBase->init();
     joystickBase->setPosition(joystickBasePosition);
-    joystickBase->setBackgroundSprite(Sprite::create("HelloWorld.png"));
-    joystickBase->setThumbSprite(Sprite::create("Boss.png"));
+    joystickBase->setBackgroundSprite(Sprite::create("JoystickBase.png"));
+    joystickBase->setThumbSprite(Sprite::create("JoystickButton.png"));
     
     SneakyJoystick *aJoystick = new SneakyJoystick();
     aJoystick->initWithRect(joystickBaseDimensions);
@@ -103,10 +121,23 @@ bool GameScene::init()
     joystickBase->setJoystick(aJoystick);
     joystickBase->setPosition(joystickBasePosition);
     
-    auto leftJoystick = joystickBase->getJoystick();
+    leftJoystick = joystickBase->getJoystick();
     leftJoystick->retain();
     this->addChild(joystickBase, 0);
     
     
     return true;
+}
+
+void GameScene::update(float dt){
+    float xVec = leftJoystick->getVelocity().x;
+    float yVec = leftJoystick->getVelocity().y;
+    float speed = sqrtf(xVec * xVec + yVec * yVec);
+    playerPhysicsBody->setVelocity( Vect( 200 * xVec * speed, 200 * yVec * speed ) );
+    //log("xVec %f, yVec %f \n", xVec, yVec);
+    
+    if(attackButton->getValue()){
+        playerPhysicsBody->applyImpulse(Vec2(0, 200));
+        playerPhysicsBody->setVelocity(Vec2(0,100));
+    }
 }

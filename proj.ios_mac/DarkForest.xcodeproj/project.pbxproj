@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D46FF111CEFDF4C00934837 /* JoystickBase.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D46FF0F1CEFDF4C00934837 /* JoystickBase.png */; };
+		0D46FF121CEFDF4C00934837 /* JoystickButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D46FF101CEFDF4C00934837 /* JoystickButton.png */; };
+		0D46FF151CEFE18300934837 /* FireButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D46FF131CEFE18300934837 /* FireButton.png */; };
+		0D46FF161CEFE18300934837 /* FireButtonDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D46FF141CEFE18300934837 /* FireButtonDown.png */; };
 		0DAD99BC1CEA968F00F31B07 /* RoundedBirdsIcons_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD99B31CEA968F00F31B07 /* RoundedBirdsIcons_1.jpg */; };
 		0DAD99BD1CEA968F00F31B07 /* RoundedBirdsIcons_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD99B41CEA968F00F31B07 /* RoundedBirdsIcons_2.jpg */; };
 		0DAD99BE1CEA968F00F31B07 /* RoundedBirdsIcons_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0DAD99B51CEA968F00F31B07 /* RoundedBirdsIcons_3.jpg */; };
@@ -117,6 +121,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D46FF0F1CEFDF4C00934837 /* JoystickBase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JoystickBase.png; sourceTree = "<group>"; };
+		0D46FF101CEFDF4C00934837 /* JoystickButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JoystickButton.png; sourceTree = "<group>"; };
+		0D46FF131CEFE18300934837 /* FireButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FireButton.png; sourceTree = "<group>"; };
+		0D46FF141CEFE18300934837 /* FireButtonDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FireButtonDown.png; sourceTree = "<group>"; };
 		0DAD99B31CEA968F00F31B07 /* RoundedBirdsIcons_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundedBirdsIcons_1.jpg; sourceTree = "<group>"; };
 		0DAD99B41CEA968F00F31B07 /* RoundedBirdsIcons_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundedBirdsIcons_2.jpg; sourceTree = "<group>"; };
 		0DAD99B51CEA968F00F31B07 /* RoundedBirdsIcons_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = RoundedBirdsIcons_3.jpg; sourceTree = "<group>"; };
@@ -340,6 +348,10 @@
 				46880B7619C43A67006E1F66 /* CloseNormal.png */,
 				46880B7719C43A67006E1F66 /* CloseSelected.png */,
 				46880B7A19C43A67006E1F66 /* HelloWorld.png */,
+				0D46FF131CEFE18300934837 /* FireButton.png */,
+				0D46FF141CEFE18300934837 /* FireButtonDown.png */,
+				0D46FF0F1CEFDF4C00934837 /* JoystickBase.png */,
+				0D46FF101CEFDF4C00934837 /* JoystickButton.png */,
 				0DAD99B31CEA968F00F31B07 /* RoundedBirdsIcons_1.jpg */,
 				0DAD99B41CEA968F00F31B07 /* RoundedBirdsIcons_2.jpg */,
 				0DAD99B51CEA968F00F31B07 /* RoundedBirdsIcons_3.jpg */,
@@ -513,14 +525,17 @@
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
+				0D46FF121CEFDF4C00934837 /* JoystickButton.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				0DAD99BC1CEA968F00F31B07 /* RoundedBirdsIcons_1.jpg in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
+				0D46FF111CEFDF4C00934837 /* JoystickBase.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
+				0D46FF161CEFE18300934837 /* FireButtonDown.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				0DAD99D31CEBEC9D00F31B07 /* Player.png in Resources */,
@@ -540,6 +555,7 @@
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
+				0D46FF151CEFE18300934837 /* FireButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
