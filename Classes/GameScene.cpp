@@ -52,9 +52,9 @@ bool GameScene::init()
     /////////////////////////////
     // add player
     player = Sprite::create("Player.png");
+    player->setScale(0.5f, 0.5f);
     player->setPosition(Vec2(visibleSize.width/2 + origin.x - 150, visibleSize.height/2 + origin.y));
     playerPhysicsBody = PhysicsBody::createCircle(player->getContentSize().width/2, PhysicsMaterial(0.0f, 1.0f, 0.0f));
-    //playerPhysicsBody->setDynamic(false);
     playerPhysicsBody->setGravityEnable(false);
     //playerPhysicsBody->setVelocity(Vec2(cocos2d::random(-500,500),
     //                              cocos2d::random(-500,500)));
@@ -66,9 +66,16 @@ bool GameScene::init()
     /////////////////////////////
     // add enemy
     enemy = Sprite::create("Enemy.png");
+    enemy->setScale(0.5f, 0.5f);
     enemy->setPosition(Vec2(visibleSize.width/2 + origin.x + 150, visibleSize.height/2 + origin.y));
     this->addChild(enemy, 0);
     
+    // fades in the sprite in 1 seconds
+    auto fadeIn = FadeIn::create(2.0f);
+    auto fadeOut = FadeOut::create(2.0f);
+    Sequence *pulseSequence = Sequence::create(fadeIn, fadeOut, NULL);
+    RepeatForever *repeat = RepeatForever::create(pulseSequence);
+    enemy->runAction(repeat);
     
     /////////////////////////////
     // add button to the right corner
