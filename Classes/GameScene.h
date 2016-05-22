@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "SneakyJoystick.h"
 #include "SneakyButton.h"
+#include "Global.h"
 
 class GameScene : public cocos2d::LayerColor
 {
@@ -25,6 +26,7 @@ public:
     CREATE_FUNC(GameScene);
     
 private:
+    Global *_gm = Global::getInstance();
     cocos2d::PhysicsWorld *sceneWorld;
     SneakyJoystick *leftJoystick;
     SneakyButton *attackButton;
@@ -37,7 +39,10 @@ private:
     void AddButton();
     void AddJoystick();
     
+    void removeSprite(Sprite *sprite);
     bool onContactBegin (cocos2d::PhysicsContact &contact);
+    void onBulletArrived(Sprite *item, bool resetCanFire=false);
+    void onMotionStreakArrived(MotionStreak *item);
 };
 
 

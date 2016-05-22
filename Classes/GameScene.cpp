@@ -52,7 +52,7 @@ bool GameScene::init()
     
     /////////////////////////////
     // add player
-    player = Sprite::create("Player.png");
+    player = Sprite::create(_gm->PlayerImage);
     player->setScale(0.5f, 0.5f);
     player->setPosition(Vec2(visibleSize.width/2 + origin.x - 150, visibleSize.height/2 + origin.y));
     playerPhysicsBody = PhysicsBody::createCircle(player->getContentSize().width/2, PhysicsMaterial(0.0f, 1.0f, 0.0f));
@@ -68,7 +68,7 @@ bool GameScene::init()
     
     /////////////////////////////
     // add enemy
-    enemy = Sprite::create("Enemy.png");
+    enemy = Sprite::create(_gm->EnemyImage);
     enemy->setScale(0.5f, 0.5f);
     enemy->setPosition(Vec2(visibleSize.width/2 + origin.x + 150, visibleSize.height/2 + origin.y));
     this->addChild(enemy, 0);
@@ -125,10 +125,10 @@ void GameScene::AddButton() {
     attackButtonBase->init();
     attackButtonBase->setPosition(attackButtonPosition);
     
-    attackButtonBase->setDefaultSprite(Sprite::create("FireButton.png"));
-    attackButtonBase->setActivatedSprite(Sprite::create("FireButtonDown.png"));
-    attackButtonBase->setDisabledSprite(Sprite::create("FireButton.png"));
-    attackButtonBase->setPressSprite(Sprite::create("FireButtonDown.png"));
+    attackButtonBase->setDefaultSprite(Sprite::create(_gm->FireButtonImage));
+    attackButtonBase->setActivatedSprite(Sprite::create(_gm->FireButtonDownImage));
+    attackButtonBase->setDisabledSprite(Sprite::create(_gm->FireButtonImage));
+    attackButtonBase->setPressSprite(Sprite::create(_gm->FireButtonDownImage));
     
     SneakyButton *aAttackButton = new SneakyButton();
     aAttackButton->initWithRect(attackButtonDimensions);
@@ -152,8 +152,8 @@ void GameScene::AddJoystick() {
     SneakyJoystickSkinnedBase *joystickBase = new SneakyJoystickSkinnedBase();
     joystickBase->init();
     joystickBase->setPosition(joystickBasePosition);
-    joystickBase->setBackgroundSprite(Sprite::create("JoystickBase.png"));
-    joystickBase->setThumbSprite(Sprite::create("JoystickButton.png"));
+    joystickBase->setBackgroundSprite(Sprite::create(_gm->JoystickBaseImage));
+    joystickBase->setThumbSprite(Sprite::create(_gm->JoystickButtonImage));
     
     SneakyJoystick *aJoystick = new SneakyJoystick();
     aJoystick->initWithRect(joystickBaseDimensions);
@@ -175,7 +175,7 @@ void GameScene::Fire() {
     // Example of using a lambda expression to implement onTouchBegan event callback function
     touchListener->onTouchBegan = [=](Touch* touch, Event* event){
         log("touch began... x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
-        dotCircle = Sprite::create("dotCircle.png");
+        dotCircle = Sprite::create(_gm->DotCircleImage);
         dotCircle->setScale(3, 3);
         dotCircle->setPosition(touch->getLocation());
         this->addChild(dotCircle, 0);
@@ -194,26 +194,36 @@ void GameScene::Fire() {
         log("touch end... x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
         dotCircle->removeFromParentAndCleanup(true);
         
+        if (!_gm->getCanFire())
+            return false;
+        
         //Create bullet sprite
-        auto bullet = Sprite::create("light1.png");
+        auto bullet = Sprite::create(_gm->Light1Image);
         bullet->setScale(5.0f, 5.0f);
-        bullet->setPosition(player->getPosition());
+        auto playerPos = player->getPosition();
+        auto touchPos = touch->getLocation();
+        bullet->setPosition(playerPos);
         this->addChild(bullet, 98);
         
+        //Calculate speed
+        auto distance = hypotf(touchPos.x - playerPos.x, touchPos.y - playerPos.y);
+        auto duration = distance / _gm->SpeedRate;
+        
         //Move from player to target
-        auto jumpTo = JumpTo::create(2, touch->getLocation(), cocos2d::RandomHelper::random_int(-25, 25), 1);
-        Sequence *bulletFlySequence = Sequence::create(jumpTo, CallFuncN::create(std::bind(&Sprite::removeFromParent,bullet)), NULL);
+        auto jumpTo = JumpTo::create(duration, touchPos, cocos2d::RandomHelper::random_int(_gm->BulletAngleMin, _gm->BulletAngleMax), 1);
+        Sequence *bulletFlySequence = Sequence::create(jumpTo, CallFuncN::create(std::bind(&GameScene::onBulletArrived, this, bullet, true)), NULL);
         bullet->runAction(bulletFlySequence);
         
         //Tail effect
-        auto motionstreak = MotionStreak::create(1.0f, 1.0f, 10.0f, Color3B(255, 255, 255), "whiteTexture.png");
-        motionstreak->setPosition(player->getPosition());
+        auto motionstreak = MotionStreak::create(1.0f, 1.0f, 10.0f, Color3B(255, 255, 255), _gm->WhiteTextureImage);
+        motionstreak->setPosition(playerPos);
         this->addChild(motionstreak, 99);
         auto tailJumpTo = jumpTo->clone();
-        tailJumpTo->setDuration(2.0f);
-        Sequence *tailFlySequence = Sequence::create(tailJumpTo, CallFuncN::create(std::bind(&Sprite::removeFromParent,motionstreak)), NULL);
+        //tailJumpTo->setDuration(2.0f);
+        Sequence *tailFlySequence = Sequence::create(tailJumpTo, CallFuncN::create(std::bind(&GameScene::onMotionStreakArrived, this, motionstreak)), NULL);
         motionstreak->runAction(tailFlySequence);
         
+        _gm->setCanFire(false);
     };
     
     //Add listener
@@ -230,4 +240,21 @@ bool GameScene::onContactBegin (cocos2d::PhysicsContact &contact) {
     }
     
     return true;
+}
+
+void GameScene::onBulletArrived(Sprite *item, bool resetCanFire) {
+    //explode
+    auto scaleTo = ScaleTo::create(1.0f, item->getScale() * 3.0f);
+    auto fadeOut = FadeOut::create(1.0f);
+    item->runAction(Sequence::create(scaleTo, fadeOut, CallFuncN::create(std::bind(&GameScene::removeSprite, this, item)), NULL));
+    if (resetCanFire)
+        _gm->setCanFire(true);
+}
+
+void GameScene::onMotionStreakArrived(MotionStreak *item) {
+    item->removeFromParentAndCleanup(true);
+}
+
+void GameScene::removeSprite(Sprite *sprite) {
+    sprite->removeFromParentAndCleanup(true);
 }

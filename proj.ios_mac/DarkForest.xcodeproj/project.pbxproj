@@ -25,6 +25,7 @@
 		0DAD99DA1CEBF2A600F31B07 /* SneakyButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DAD99D91CEBF2A600F31B07 /* SneakyButton.cpp */; };
 		0DAD99DD1CEBF3F900F31B07 /* SneakyJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DAD99DC1CEBF3F900F31B07 /* SneakyJoystick.cpp */; };
 		0DAD99E01CEBF45E00F31B07 /* SneakyJoystickSkinnedBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DAD99DF1CEBF45E00F31B07 /* SneakyJoystickSkinnedBase.cpp */; };
+		0E62AC971CF20ABF0076D6E4 /* Global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E62AC961CF20ABF0076D6E4 /* Global.cpp */; };
 		0ECB9A541CF16E7D00A4F864 /* whiteTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ECB9A531CF16E7D00A4F864 /* whiteTexture.png */; };
 		0EE420521CF12C6500D989E8 /* dotCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE4204F1CF12C6500D989E8 /* dotCircle.png */; };
 		0EE420531CF12C6500D989E8 /* light1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EE420501CF12C6500D989E8 /* light1.png */; };
@@ -148,6 +149,8 @@
 		0DAD99DC1CEBF3F900F31B07 /* SneakyJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SneakyJoystick.cpp; sourceTree = "<group>"; };
 		0DAD99DE1CEBF44900F31B07 /* SneakyJoystickSkinnedBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SneakyJoystickSkinnedBase.h; sourceTree = "<group>"; };
 		0DAD99DF1CEBF45E00F31B07 /* SneakyJoystickSkinnedBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SneakyJoystickSkinnedBase.cpp; sourceTree = "<group>"; };
+		0E62AC951CF20AAE0076D6E4 /* Global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
+		0E62AC961CF20ABF0076D6E4 /* Global.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Global.cpp; sourceTree = "<group>"; };
 		0ECB9A531CF16E7D00A4F864 /* whiteTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteTexture.png; sourceTree = "<group>"; };
 		0EE4204F1CF12C6500D989E8 /* dotCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotCircle.png; sourceTree = "<group>"; };
 		0EE420501CF12C6500D989E8 /* light1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light1.png; sourceTree = "<group>"; };
@@ -287,6 +290,15 @@
 			name = JoyStick;
 			sourceTree = "<group>";
 		};
+		0E62AC941CF20A8B0076D6E4 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				0E62AC951CF20AAE0076D6E4 /* Global.h */,
+				0E62AC961CF20ABF0076D6E4 /* Global.cpp */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,6 +390,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0E62AC941CF20A8B0076D6E4 /* Helper */,
 				0DAD99D41CEBF21800F31B07 /* JoyStick */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
@@ -483,6 +496,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = L53NJ68Q29;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "DarkForest" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -598,6 +616,7 @@
 				0DAD99DA1CEBF2A600F31B07 /* SneakyButton.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				0E62AC971CF20ABF0076D6E4 /* Global.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				0DAD99DD1CEBF3F900F31B07 /* SneakyJoystick.cpp in Sources */,
@@ -638,7 +657,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zonggao Jia (6XHNZ75B8N)";
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -664,6 +683,7 @@
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 				);
+				PROVISIONING_PROFILE = "13fa4ed8-d5ea-456c-ac01-ff6534cef060";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
@@ -675,7 +695,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zonggao Jia (6XHNZ75B8N)";
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -699,6 +719,7 @@
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 				);
+				PROVISIONING_PROFILE = "13fa4ed8-d5ea-456c-ac01-ff6534cef060";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
