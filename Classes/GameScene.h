@@ -17,10 +17,6 @@ class GameScene : public cocos2d::LayerColor
 {
 public:
     static cocos2d::Scene* createScene();
-    SneakyJoystick *leftJoystick;
-    SneakyButton *attackButton;
-    Sprite *player, *enemy;
-    PhysicsBody *playerPhysicsBody;
     
     virtual bool init();
     void update(float dt);
@@ -30,7 +26,18 @@ public:
     
 private:
     cocos2d::PhysicsWorld *sceneWorld;
+    SneakyJoystick *leftJoystick;
+    SneakyButton *attackButton;
+    Sprite *player, *enemy, *bullet, *dotCircle;
+    PhysicsBody *playerPhysicsBody;
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
     void SetPhysicsWorld(cocos2d::PhysicsWorld *world) { sceneWorld = world; };
+    void Fire();
+    void AddButton();
+    void AddJoystick();
+    
+    bool onContactBegin (cocos2d::PhysicsContact &contact);
 };
 
 
