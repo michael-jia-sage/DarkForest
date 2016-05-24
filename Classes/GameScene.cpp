@@ -80,6 +80,10 @@ bool GameScene::init()
     RepeatForever *repeat = RepeatForever::create(pulseSequence);
     enemy->runAction(repeat);
     
+    //randomly moving
+    RepeatForever *movingRepeat = RepeatForever::create(GameScene::movingEnemy());
+    enemy->runAction(movingRepeat);
+    
     // add button to the right corner
     this->AddButton();
     
@@ -106,7 +110,7 @@ void GameScene::update(float dt){
     if ((playerPos.y <= player->getBoundingBox().size.height && yVec < 0) || (playerPos.y >= visibleSize.height && yVec > 0))
         yVec = 0;
     float speed = sqrtf(xVec * xVec + yVec * yVec);
-    playerPhysicsBody->setVelocity( Vect( 200 * xVec * speed, 200 * yVec * speed ) );
+    playerPhysicsBody->setVelocity( Vect( _gm->MovingVecBase * xVec * speed, _gm->MovingVecBase * yVec * speed ) );
     log("xVec %f, yVec %f, x %f, y %f \n", xVec, yVec, playerPos.x, playerPos.y);
     
     if(attackButton->getValue()){
@@ -206,8 +210,8 @@ void GameScene::Fire() {
         this->addChild(bullet, 98);
         
         //Calculate speed
-        auto distance = hypotf(touchPos.x - playerPos.x, touchPos.y - playerPos.y);
-        auto duration = distance / _gm->SpeedRate;
+        auto distance = Global::calDistance(touchPos, playerPos);
+        auto duration = distance / _gm->BulletSpeedRate;
         
         //Move from player to target
         auto jumpTo = JumpTo::create(duration, touchPos, cocos2d::RandomHelper::random_int(_gm->BulletAngleMin, _gm->BulletAngleMax), 1);
@@ -257,4 +261,13 @@ void GameScene::onMotionStreakArrived(MotionStreak *item) {
 
 void GameScene::removeSprite(Sprite *sprite) {
     sprite->removeFromParentAndCleanup(true);
+}
+
+MoveTo* GameScene::movingEnemy() {
+    auto movingSpeed = rand_0_1();
+    if (movingSpeed < 0.5f)
+        movingSpeed += 0.5;
+    _gm->setMoveTarget(Vec2(rand_0_1() * visibleSize.width, rand_0_1() * visibleSize.height));
+    auto duration = Global::calDistance(_gm->getMoveTarget(), enemy->getPosition()) / (_gm->PlayerSpeedRate * movingSpeed);
+    return MoveTo::create(duration, _gm->getMoveTarget());
 }

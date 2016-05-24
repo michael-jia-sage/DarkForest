@@ -43,6 +43,7 @@ private:
     bool onContactBegin (cocos2d::PhysicsContact &contact);
     void onBulletArrived(Sprite *item, bool resetCanFire=false);
     void onMotionStreakArrived(MotionStreak *item);
+    MoveTo* movingEnemy();
 };
 
 

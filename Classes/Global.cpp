@@ -18,3 +18,8 @@ Global* Global::getInstance()
     
     return global;
 }
+
+float Global::calDistance(cocos2d::Vec2 p1, cocos2d::Vec2 p2)
+{
+    return hypotf(p2.x - p1.x, p2.y - p2.y);
+}

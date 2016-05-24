@@ -10,6 +10,7 @@ private:
     
 public:
     static Global* getInstance();
+    static float calDistance(cocos2d::Vec2 p1, cocos2d::Vec2 p2);
     
     //images
     const std::string PlayerImage = "Player.png";
@@ -26,9 +27,16 @@ public:
     //const std::string Image = ".png";
     
     //settings
+    const int MovingVecBase = 200;
+    const int PlayerSpeedRate = 50;
     const int BulletAngleMin = -25;
     const int BulletAngleMax = 25;
-    const int SpeedRate = 100;
+    const int BulletSpeedRate = 150;
+    
+    //enemy strategy
+    CC_SYNTHESIZE(cocos2d::Vec2, moveTarget, MoveTarget);
+    CC_SYNTHESIZE(cocos2d::Vec2, moveVec, MoveVec);
+    CC_SYNTHESIZE(cocos2d::Vec2, fireTarget, FireTarget);
     
     //game controls
     CC_SYNTHESIZE(bool, canFire, CanFire);
