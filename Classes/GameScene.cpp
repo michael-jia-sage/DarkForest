@@ -39,16 +39,11 @@ bool GameScene::init()
     
     /////////////////////////////
     // add edge
-    auto edgeBody = PhysicsBody::createEdgeBox(visibleSize, PHYSICSBODY_MATERIAL_DEFAULT, 3);
+    //auto edgeBody = PhysicsBody::createEdgeBox(visibleSize, PHYSICSBODY_MATERIAL_DEFAULT, 3);
     auto edgeNode = Node::create();
     edgeNode->setPosition( Point(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-    edgeNode->setPhysicsBody(edgeBody);
+    //edgeNode->setPhysicsBody(edgeBody);
     this->addChild(edgeNode);
-    
-    //force play not off-screen
-    //auto contactListener = EventListenerPhysicsContact::create();
-    //contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
-    //this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
     
     /////////////////////////////
     // add player
@@ -71,21 +66,14 @@ bool GameScene::init()
     enemy = Sprite::create(_gm->EnemyImage);
     enemy->setScale(0.5f, 0.5f);
     enemy->setPosition(Vec2(visibleSize.width/2 + origin.x + 150, visibleSize.height/2 + origin.y));
+    enemyPhysicsBody = PhysicsBody::createCircle(enemy->getContentSize().width/2, PhysicsMaterial(0.0f, 1.0f, 0.0f));
+    enemyPhysicsBody->setGravityEnable(false);
+    enemyPhysicsBody->setCollisionBitmask(3);
+    enemyPhysicsBody->setContactTestBitmask(true);
+    enemy->setPhysicsBody(enemyPhysicsBody);
     this->addChild(enemy, 0);
-    
-    // fades in the sprite in 1 seconds
-//    auto fadeIn = FadeIn::create(2.0f);
-//    auto fadeOut = FadeOut::create(2.0f);
-//    Sequence *pulseSequence = Sequence::create(fadeIn, fadeOut, NULL);
-//    RepeatForever *repeat = RepeatForever::create(pulseSequence);
-//    enemy->runAction(repeat);
-    
-    //randomly moving
-    //this->randomizeEnemyMovingInfo();
-    Sequence *movingSequence = Sequence::create(CallFunc::create(std::bind(&GameScene::randomizeEnemyMovingInfo, this)), CallFunc::create(std::bind(&GameScene::movingEnemy, this)), NULL);
-    RepeatForever *movingRepeat = RepeatForever::create(movingSequence);
-    //Repeat *movingRpt = Repeat::create(movingSequence, 3);
-    //this->runAction(movingRepeat);
+    auto fadeOut = FadeOut::create(1.0f);
+    enemy->runAction(fadeOut);
     
     // add button to the right corner
     this->AddButton();
@@ -100,6 +88,10 @@ bool GameScene::init()
     // touch anywhere to fire a light ball
     this->Fire();
     
+    //contact listener
+    auto contactListener = EventListenerPhysicsContact::create();
+    contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
     
     return true;
 }
@@ -108,6 +100,11 @@ void GameScene::update(float dt){
     if (!_gm->getEnemyMoving()) {
         randomizeEnemyMovingInfo();
         movingEnemy();
+        // fades in and out the sprite in 1 seconds
+        auto fadeIn = FadeIn::create(0.5f);
+        auto fadeOut = FadeOut::create(0.5f);
+        Sequence *fadeSequence = Sequence::create(fadeIn, fadeOut, NULL);
+        enemy->runAction(fadeSequence);
     }
     
     auto playerPos = player->getPosition();
@@ -216,6 +213,11 @@ void GameScene::Fire() {
         auto playerPos = player->getPosition();
         auto touchPos = touch->getLocation();
         bullet->setPosition(playerPos);
+        playerBulletPhysicsBody = PhysicsBody::createCircle(bullet->getContentSize().width/2, PhysicsMaterial(0.0f, 1.0f, 0.0f));
+        playerBulletPhysicsBody->setGravityEnable(false);
+        playerBulletPhysicsBody->setCollisionBitmask(4);
+        playerBulletPhysicsBody->setContactTestBitmask(true);
+        bullet->setPhysicsBody(playerBulletPhysicsBody);
         this->addChild(bullet, 98);
         
         //Calculate speed
@@ -247,9 +249,9 @@ void GameScene::Fire() {
 bool GameScene::onContactBegin (cocos2d::PhysicsContact &contact) {
     PhysicsBody *a = contact.getShapeA()->getBody();
     PhysicsBody *b = contact.getShapeB()->getBody();
-    
-    if ( (1 == a->getCategoryBitmask() && 2 == b->getCategoryBitmask()) || (2 == a->getCategoryBitmask() && 1 == b->getCategoryBitmask())) {
-        log("collide here");
+    log("a is %d, b is %d", a->getCollisionBitmask(), b->getCollisionBitmask());
+    if ( (3 == a->getCollisionBitmask() && 4 == b->getCollisionBitmask()) || (4 == a->getCollisionBitmask() && 3 == b->getCollisionBitmask())) {
+        log("Bingo!");
     }
     
     return true;

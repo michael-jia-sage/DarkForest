@@ -31,7 +31,7 @@ private:
     SneakyJoystick *leftJoystick;
     SneakyButton *attackButton;
     Sprite *player, *enemy, *bullet, *dotCircle;
-    PhysicsBody *playerPhysicsBody;
+    PhysicsBody *playerPhysicsBody, *enemyPhysicsBody, *playerBulletPhysicsBody, *enemyBulletPhysicsBody;
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     int enemyMovingSpeed, enemyMoveToX, enemyMoveToY;
