@@ -32,7 +32,7 @@ bool GameScene::init()
 {
     //////////////////////////////
     // super init first
-    if ( !LayerColor::initWithColor(Color4B(12,27,10,46)) )
+    if ( !LayerColor::initWithColor(Color4B(255,255,255,46)) ) //Color4B(12,27,10,46)
     {
         return false;
     }
@@ -48,7 +48,7 @@ bool GameScene::init()
     /////////////////////////////
     // add player
     player = Sprite::create(_gm->PlayerImage);
-    player->setScale(0.5f, 0.5f);
+    player->setScale(0.2f, 0.2f);
     player->setPosition(Vec2(visibleSize.width/2 + origin.x - 150, visibleSize.height/2 + origin.y));
     playerPhysicsBody = PhysicsBody::createCircle(player->getContentSize().width/2, PhysicsMaterial(0.0f, 1.0f, 0.0f));
     playerPhysicsBody->setGravityEnable(false);
@@ -64,7 +64,7 @@ bool GameScene::init()
     /////////////////////////////
     // add enemy
     enemy = Sprite::create(_gm->EnemyImage);
-    enemy->setScale(0.5f, 0.5f);
+    enemy->setScale(0.2f, 0.2f);
     enemy->setPosition(Vec2(visibleSize.width/2 + origin.x + 150, visibleSize.height/2 + origin.y));
     enemyPhysicsBody = PhysicsBody::createCircle(enemy->getContentSize().width/2, PhysicsMaterial(0.0f, 1.0f, 0.0f));
     enemyPhysicsBody->setGravityEnable(false);
@@ -92,7 +92,9 @@ bool GameScene::init()
     auto contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
-    
+
+    test();
+
     return true;
 }
 
@@ -124,6 +126,7 @@ void GameScene::update(float dt){
         //playerPhysicsBody->applyImpulse(Vec2(0, 200));
         //playerPhysicsBody->setVelocity(Vec2(0,100));
     }
+    
 }
 
 void GameScene::AddButton() {
@@ -209,7 +212,7 @@ void GameScene::Fire() {
         
         //Create bullet sprite
         auto bullet = Sprite::create(_gm->Light1Image);
-        bullet->setScale(5.0f, 5.0f);
+        bullet->setScale(2.0f, 2.0f);
         auto playerPos = player->getPosition();
         auto touchPos = touch->getLocation();
         bullet->setPosition(playerPos);
@@ -288,4 +291,32 @@ void GameScene::randomizeEnemyMovingInfo() {
     _gm->setMoveTarget(Vec2(enemyMoveToX * visibleSize.width / 100, enemyMoveToY * visibleSize.height / 100));
     enemyMovingDuration = Global::calDistance(_gm->getMoveTarget(), enemy->getPosition()) / (_gm->PlayerSpeedRate * enemyMovingSpeed / 100);
     log("Enemy should move to: %f %f at %f", _gm->getMoveTarget().x, _gm->getMoveTarget().y, enemyMovingDuration);
+}
+
+void GameScene::test() {
+    //test overlay
+    auto enemy1 = Sprite::create(_gm->BossImage);
+    enemy1->setScale(0.5f, 0.5f);
+    enemy1->setPosition(Vec2(visibleSize.width/2 + origin.x + 200, visibleSize.height/2 + origin.y));
+//    enemy1->setBlendFunc(cocos2d::BlendFunc::DISABLE);
+//    auto enemyPhysicsBody1 = PhysicsBody::createCircle(enemy1->getContentSize().width/2, PhysicsMaterial(0.0f, 1.0f, 0.0f));
+//    enemyPhysicsBody1->setGravityEnable(false);
+//    enemyPhysicsBody1->setCollisionBitmask(3);
+//    enemyPhysicsBody1->setContactTestBitmask(true);
+//    enemy1->setPhysicsBody(enemyPhysicsBody1);
+    this->addChild(enemy1);
+//    auto fadeOut = FadeOut::create(1.0f);
+//    enemy1->runAction(fadeOut);
+    
+    Sprite* sprite1 = Sprite::create("hole1.png");
+//    sprite1->setBlendFunc(cocos2d::BlendFunc::DISABLE);
+    sprite1->setPosition(Vec2(visibleSize.width/2 + origin.x + 180, visibleSize.height/2 + origin.y));
+    this->addChild(sprite1);
+    
+//    auto enemy2 = Sprite::create(_gm->EnemyImage);
+//    enemy2->setScale(0.5f, 0.5f);
+//    enemy2->setPosition(Vec2(visibleSize.width/2 + origin.x + 200, visibleSize.height/2 + origin.y));
+//    BlendFunc bf = { GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
+//    enemy2->setBlendFunc(bf);
+//    this->addChild(enemy2);
 }

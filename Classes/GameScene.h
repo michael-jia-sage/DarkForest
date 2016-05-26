@@ -48,6 +48,8 @@ private:
     void onMotionStreakArrived(MotionStreak *item);
     void movingEnemy();
     void randomizeEnemyMovingInfo();
+    
+    void test();
 };
 
 
