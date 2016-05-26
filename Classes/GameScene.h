@@ -34,6 +34,9 @@ private:
     PhysicsBody *playerPhysicsBody;
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    int enemyMovingSpeed, enemyMoveToX, enemyMoveToY;
+    float enemyMovingDuration;
+    
     void SetPhysicsWorld(cocos2d::PhysicsWorld *world) { sceneWorld = world; };
     void Fire();
     void AddButton();
@@ -43,7 +46,8 @@ private:
     bool onContactBegin (cocos2d::PhysicsContact &contact);
     void onBulletArrived(Sprite *item, bool resetCanFire=false);
     void onMotionStreakArrived(MotionStreak *item);
-    MoveTo* movingEnemy();
+    void movingEnemy();
+    void randomizeEnemyMovingInfo();
 };
 
 

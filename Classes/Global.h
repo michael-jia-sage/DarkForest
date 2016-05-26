@@ -39,6 +39,7 @@ public:
     CC_SYNTHESIZE(cocos2d::Vec2, fireTarget, FireTarget);
     
     //game controls
+    CC_SYNTHESIZE(bool, enemyMoving, EnemyMoving);
     CC_SYNTHESIZE(bool, canFire, CanFire);
     
     //scores

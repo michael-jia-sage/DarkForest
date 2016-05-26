@@ -6,6 +6,7 @@ static Global* global = nullptr;
 
 Global::Global()
 {
+    enemyMoving = false;
     canFire = true;
     scoreValue = 0;
 }

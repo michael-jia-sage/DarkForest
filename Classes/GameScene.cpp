@@ -74,15 +74,18 @@ bool GameScene::init()
     this->addChild(enemy, 0);
     
     // fades in the sprite in 1 seconds
-    auto fadeIn = FadeIn::create(2.0f);
-    auto fadeOut = FadeOut::create(2.0f);
-    Sequence *pulseSequence = Sequence::create(fadeIn, fadeOut, NULL);
-    RepeatForever *repeat = RepeatForever::create(pulseSequence);
-    enemy->runAction(repeat);
+//    auto fadeIn = FadeIn::create(2.0f);
+//    auto fadeOut = FadeOut::create(2.0f);
+//    Sequence *pulseSequence = Sequence::create(fadeIn, fadeOut, NULL);
+//    RepeatForever *repeat = RepeatForever::create(pulseSequence);
+//    enemy->runAction(repeat);
     
     //randomly moving
-    RepeatForever *movingRepeat = RepeatForever::create(GameScene::movingEnemy());
-    enemy->runAction(movingRepeat);
+    //this->randomizeEnemyMovingInfo();
+    Sequence *movingSequence = Sequence::create(CallFunc::create(std::bind(&GameScene::randomizeEnemyMovingInfo, this)), CallFunc::create(std::bind(&GameScene::movingEnemy, this)), NULL);
+    RepeatForever *movingRepeat = RepeatForever::create(movingSequence);
+    //Repeat *movingRpt = Repeat::create(movingSequence, 3);
+    //this->runAction(movingRepeat);
     
     // add button to the right corner
     this->AddButton();
@@ -102,6 +105,11 @@ bool GameScene::init()
 }
 
 void GameScene::update(float dt){
+    if (!_gm->getEnemyMoving()) {
+        randomizeEnemyMovingInfo();
+        movingEnemy();
+    }
+    
     auto playerPos = player->getPosition();
     float xVec = leftJoystick->getVelocity().x;
     if ((playerPos.x <= player->getBoundingBox().size.width && xVec < 0) || (playerPos.x >= visibleSize.width - 10 && xVec > 0))
@@ -111,7 +119,8 @@ void GameScene::update(float dt){
         yVec = 0;
     float speed = sqrtf(xVec * xVec + yVec * yVec);
     playerPhysicsBody->setVelocity( Vect( _gm->MovingVecBase * xVec * speed, _gm->MovingVecBase * yVec * speed ) );
-    log("xVec %f, yVec %f, x %f, y %f \n", xVec, yVec, playerPos.x, playerPos.y);
+    if (xVec != 0 && yVec != 0)
+        log("xVec %f, yVec %f, x %f, y %f \n", xVec, yVec, playerPos.x, playerPos.y);
     
     if(attackButton->getValue()){
         player->setPosition(Vec2(visibleSize.width/2 + origin.x - 150, visibleSize.height/2 + origin.y));
@@ -263,11 +272,18 @@ void GameScene::removeSprite(Sprite *sprite) {
     sprite->removeFromParentAndCleanup(true);
 }
 
-MoveTo* GameScene::movingEnemy() {
-    auto movingSpeed = rand_0_1();
-    if (movingSpeed < 0.5f)
-        movingSpeed += 0.5;
-    _gm->setMoveTarget(Vec2(rand_0_1() * visibleSize.width, rand_0_1() * visibleSize.height));
-    auto duration = Global::calDistance(_gm->getMoveTarget(), enemy->getPosition()) / (_gm->PlayerSpeedRate * movingSpeed);
-    return MoveTo::create(duration, _gm->getMoveTarget());
+void GameScene::movingEnemy() {
+    log("Enemy is moving to: %f %f at %f", _gm->getMoveTarget().x, _gm->getMoveTarget().y, enemyMovingDuration);
+    enemy->runAction(Sequence::create(CallFuncN::create(std::bind(&Global::setEnemyMoving, _gm, true)),
+                                      MoveTo::create(enemyMovingDuration, _gm->getMoveTarget()),
+                                      CallFuncN::create(std::bind(&Global::setEnemyMoving, _gm, false)), NULL));
+}
+
+void GameScene::randomizeEnemyMovingInfo() {
+    enemyMovingSpeed = arc4random() % 50 + 50;  //moving speed from 50 ~ 100
+    enemyMoveToX = arc4random() % 100;
+    enemyMoveToY = arc4random() % 100;
+    _gm->setMoveTarget(Vec2(enemyMoveToX * visibleSize.width / 100, enemyMoveToY * visibleSize.height / 100));
+    enemyMovingDuration = Global::calDistance(_gm->getMoveTarget(), enemy->getPosition()) / (_gm->PlayerSpeedRate * enemyMovingSpeed / 100);
+    log("Enemy should move to: %f %f at %f", _gm->getMoveTarget().x, _gm->getMoveTarget().y, enemyMovingDuration);
 }
