@@ -58,6 +58,11 @@ bool GameScene::init()
     this->addChild(enemy, 90);
 //    auto fadeOut = FadeOut::create(1.0f);
 //    enemy->runAction(fadeOut);
+    //add listner
+    auto _listener = EventListenerCustom::create("player_fired", [=](EventCustom* event){
+        log("Event triggered: %s", event->getEventName().c_str());
+    });
+    enemy->getEventDispatcher()->addEventListenerWithFixedPriority(_listener, 30);
     
     auto enemy1 = Sprite::create(_gm->BossImage);
     enemy1->setScale(0.5f, 0.5f);
@@ -221,6 +226,14 @@ void GameScene::Fire() {
         
         if (!_gm->getCanFire())
             return false;
+        
+        //Trigger event
+        char* buf = new char[10];
+        sprintf(buf, "%s", "test");
+        auto event1 = EventCustom("player_fired");
+        event1.setUserData(buf);
+        _eventDispatcher->dispatchEvent(&event1);
+        CC_SAFE_DELETE_ARRAY(buf);
         
         //Create bullet sprite
         auto bullet = Sprite::create(_gm->Light1Image);
