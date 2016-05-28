@@ -24,6 +24,8 @@ public:
     const std::string JoystickBaseImage = "JoystickBase.png";
     const std::string JoystickButtonImage = "JoystickButton.png";
     const std::string WhiteTextureImage = "whiteTexture.png";
+    const std::string WindowImage = "hole.png";
+    const int WindowRadius = 25;
     //const std::string Image = ".png";
     
     //settings

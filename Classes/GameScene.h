@@ -30,7 +30,7 @@ private:
     cocos2d::PhysicsWorld *sceneWorld;
     SneakyJoystick *leftJoystick;
     SneakyButton *attackButton;
-    Sprite *player, *enemy, *bullet, *dotCircle;
+    Sprite *windowLayer, *player, *enemy, *bullet, *dotCircle;
     PhysicsBody *playerPhysicsBody, *enemyPhysicsBody, *playerBulletPhysicsBody, *enemyBulletPhysicsBody;
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -48,6 +48,7 @@ private:
     void onMotionStreakArrived(MotionStreak *item);
     void movingEnemy();
     void randomizeEnemyMovingInfo();
+    void movingWindow(Vec2 pos);
     
     void test();
 };

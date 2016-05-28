@@ -32,7 +32,7 @@ bool GameScene::init()
 {
     //////////////////////////////
     // super init first
-    if ( !LayerColor::initWithColor(Color4B(255,255,255,46)) ) //Color4B(12,27,10,46)
+    if ( !LayerColor::initWithColor(Color4B(255,255,255,255)) ) //Color4B(12,27,10,46)
     {
         return false;
     }
@@ -40,15 +40,50 @@ bool GameScene::init()
     /////////////////////////////
     // add edge
     //auto edgeBody = PhysicsBody::createEdgeBox(visibleSize, PHYSICSBODY_MATERIAL_DEFAULT, 3);
-    auto edgeNode = Node::create();
-    edgeNode->setPosition( Point(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-    //edgeNode->setPhysicsBody(edgeBody);
-    this->addChild(edgeNode);
+//    auto edgeNode = Node::create();
+//    edgeNode->setPosition( Point(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+//    //edgeNode->setPhysicsBody(edgeBody);
+//    this->addChild(edgeNode);
+    
+    /////////////////////////////
+    // add enemy
+    enemy = Sprite::create(_gm->EnemyImage);
+    enemy->setScale(0.5f, 0.5f);
+    enemy->setPosition(Vec2(visibleSize.width/2 + origin.x + 150, visibleSize.height/2 + origin.y));
+    enemyPhysicsBody = PhysicsBody::createCircle(enemy->getContentSize().width/2, PhysicsMaterial(0.0f, 1.0f, 0.0f));
+    enemyPhysicsBody->setGravityEnable(false);
+    enemyPhysicsBody->setCollisionBitmask(3);
+    //enemyPhysicsBody->setContactTestBitmask(true);
+    enemy->setPhysicsBody(enemyPhysicsBody);
+    this->addChild(enemy, 90);
+//    auto fadeOut = FadeOut::create(1.0f);
+//    enemy->runAction(fadeOut);
+    
+    auto enemy1 = Sprite::create(_gm->BossImage);
+    enemy1->setScale(0.5f, 0.5f);
+    enemy1->setPosition(Vec2(visibleSize.width/2 + origin.x + 200, visibleSize.height/2 + origin.y));
+    this->addChild(enemy1, 95);
+    
+    /////////////////////////////
+    // add window layer
+    windowLayer = Sprite::create(_gm->WindowImage);
+    windowLayer->setScale(2.0f, 2.0f);
+    windowLayer->setPosition(Vec2(0, visibleSize.height));
+    this->addChild(windowLayer, 100);
+    
+    // add button to the right corner
+    this->AddButton();
+    
+    // add joystick to the left corner
+    this->AddJoystick();
+
+    // Enable scheduler
+    scheduleUpdate();
     
     /////////////////////////////
     // add player
     player = Sprite::create(_gm->PlayerImage);
-    player->setScale(0.2f, 0.2f);
+    player->setScale(0.5f, 0.5f);
     player->setPosition(Vec2(visibleSize.width/2 + origin.x - 150, visibleSize.height/2 + origin.y));
     playerPhysicsBody = PhysicsBody::createCircle(player->getContentSize().width/2, PhysicsMaterial(0.0f, 1.0f, 0.0f));
     playerPhysicsBody->setGravityEnable(false);
@@ -59,30 +94,7 @@ bool GameScene::init()
     //playerPhysicsBody->setTag(DRAG_BODYS_TAG);
     
     player->setPhysicsBody(playerPhysicsBody);
-    this->addChild(player, 0);
-    
-    /////////////////////////////
-    // add enemy
-    enemy = Sprite::create(_gm->EnemyImage);
-    enemy->setScale(0.2f, 0.2f);
-    enemy->setPosition(Vec2(visibleSize.width/2 + origin.x + 150, visibleSize.height/2 + origin.y));
-    enemyPhysicsBody = PhysicsBody::createCircle(enemy->getContentSize().width/2, PhysicsMaterial(0.0f, 1.0f, 0.0f));
-    enemyPhysicsBody->setGravityEnable(false);
-    enemyPhysicsBody->setCollisionBitmask(3);
-    enemyPhysicsBody->setContactTestBitmask(true);
-    enemy->setPhysicsBody(enemyPhysicsBody);
-    this->addChild(enemy, 0);
-    auto fadeOut = FadeOut::create(1.0f);
-    enemy->runAction(fadeOut);
-    
-    // add button to the right corner
-    this->AddButton();
-    
-    // add joystick to the left corner
-    this->AddJoystick();
-
-    // Enable scheduler
-    scheduleUpdate();
+    this->addChild(player, 105);
     
     /////////////////////////////
     // touch anywhere to fire a light ball
@@ -152,7 +164,7 @@ void GameScene::AddButton() {
     
     attackButton = attackButtonBase->getButton();
     attackButton->retain();
-    this->addChild(attackButtonBase, 0);
+    this->addChild(attackButtonBase, 101);
 }
 
 void GameScene::AddJoystick() {
@@ -176,7 +188,7 @@ void GameScene::AddJoystick() {
     
     leftJoystick = joystickBase->getJoystick();
     leftJoystick->retain();
-    this->addChild(joystickBase, 0);
+    this->addChild(joystickBase, 102);
 }
 
 void GameScene::Fire() {
@@ -221,7 +233,7 @@ void GameScene::Fire() {
         playerBulletPhysicsBody->setCollisionBitmask(4);
         playerBulletPhysicsBody->setContactTestBitmask(true);
         bullet->setPhysicsBody(playerBulletPhysicsBody);
-        this->addChild(bullet, 98);
+        this->addChild(bullet, 106);
         
         //Calculate speed
         auto distance = Global::calDistance(touchPos, playerPos);
@@ -235,7 +247,7 @@ void GameScene::Fire() {
         //Tail effect
         auto motionstreak = MotionStreak::create(1.0f, 1.0f, 10.0f, Color3B(255, 255, 255), _gm->WhiteTextureImage);
         motionstreak->setPosition(playerPos);
-        this->addChild(motionstreak, 99);
+        this->addChild(motionstreak, 107);
         auto tailJumpTo = jumpTo->clone();
         //tailJumpTo->setDuration(2.0f);
         Sequence *tailFlySequence = Sequence::create(tailJumpTo, CallFuncN::create(std::bind(&GameScene::onMotionStreakArrived, this, motionstreak)), NULL);
@@ -264,7 +276,9 @@ void GameScene::onBulletArrived(Sprite *item, bool resetCanFire) {
     //explode
     auto scaleTo = ScaleTo::create(1.0f, item->getScale() * 3.0f);
     auto fadeOut = FadeOut::create(1.0f);
-    item->runAction(Sequence::create(scaleTo, fadeOut, CallFuncN::create(std::bind(&GameScene::removeSprite, this, item)), NULL));
+    item->runAction(Sequence::create(CallFuncN::create(std::bind(&GameScene::movingWindow, this, item->getPosition())),
+                                     scaleTo, fadeOut, CallFuncN::create(std::bind(&GameScene::removeSprite, this, item)),
+                                      NULL));
     if (resetCanFire)
         _gm->setCanFire(true);
 }
@@ -293,6 +307,10 @@ void GameScene::randomizeEnemyMovingInfo() {
     log("Enemy should move to: %f %f at %f", _gm->getMoveTarget().x, _gm->getMoveTarget().y, enemyMovingDuration);
 }
 
+void GameScene::movingWindow(Vec2 pos) {
+    windowLayer->setPosition(pos.x + _gm->WindowRadius, pos.y - _gm->WindowRadius);
+}
+
 void GameScene::test() {
     //test overlay
     auto enemy1 = Sprite::create(_gm->BossImage);
@@ -307,11 +325,6 @@ void GameScene::test() {
     this->addChild(enemy1);
 //    auto fadeOut = FadeOut::create(1.0f);
 //    enemy1->runAction(fadeOut);
-    
-    Sprite* sprite1 = Sprite::create("hole1.png");
-//    sprite1->setBlendFunc(cocos2d::BlendFunc::DISABLE);
-    sprite1->setPosition(Vec2(visibleSize.width/2 + origin.x + 180, visibleSize.height/2 + origin.y));
-    this->addChild(sprite1);
     
 //    auto enemy2 = Sprite::create(_gm->EnemyImage);
 //    enemy2->setScale(0.5f, 0.5f);
