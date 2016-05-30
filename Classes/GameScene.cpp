@@ -145,6 +145,8 @@ void GameScene::update(float dt){
     
     if(attackButton->getValue()){
         player->setPosition(Vec2(visibleSize.width/2 + origin.x - 150, visibleSize.height/2 + origin.y));
+        
+        test();
         //playerPhysicsBody->applyImpulse(Vec2(0, 200));
         //playerPhysicsBody->setVelocity(Vec2(0,100));
     }
@@ -154,7 +156,7 @@ void GameScene::update(float dt){
     lblDistance->setString(__String::createWithFormat("%d", distance)->getCString());
     
     // Update disclosure
-    disclosure = Global::calDisclosure(player->getPosition(), _gm->PlayerRadius, windowPosition, _gm->WindowRadius, _gm->CloudRadius);
+    disclosure = Global::calDisclosure(enemy->getPosition(), _gm->PlayerRadius, windowPosition, _gm->WindowRadius, _gm->CloudRadius);
     lblDisclosure->setString(__String::createWithFormat("%d", disclosure)->getCString());
 }
 
@@ -371,5 +373,7 @@ void GameScene::AddInformationBar() {
 void GameScene::test() {
     //test information bar
     
-    
+    disclosure = Global::calDisclosure(enemy->getPosition(), _gm->PlayerRadius, windowPosition, _gm->WindowRadius, _gm->CloudRadius);
+    lblDisclosure->setString(__String::createWithFormat("%d", disclosure)->getCString());
+
 }
