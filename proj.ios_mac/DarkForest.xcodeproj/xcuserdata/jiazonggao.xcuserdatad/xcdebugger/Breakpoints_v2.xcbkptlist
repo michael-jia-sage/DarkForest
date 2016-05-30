@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/GameScene.cpp"
-            timestampString = "486169393.068808"
+            timestampString = "486257331.130518"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
             landmarkName = "GameScene::update(float dt)"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/GameScene.cpp"
-            timestampString = "486169393.068808"
+            timestampString = "486257331.130518"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
             landmarkName = "GameScene::onContactBegin (cocos2d::PhysicsContact &amp;contact)"
             landmarkType = "5">
          </BreakpointContent>

@@ -74,6 +74,7 @@ bool GameScene::init()
     windowLayer = Sprite::create(_gm->WindowImage);
     windowLayer->setScale(2.0f, 2.0f);
     windowLayer->setPosition(Vec2(0, visibleSize.height));
+    windowPosition = Vec2(windowLayer->getPosition().x - _gm->WindowRadius, windowLayer->getPosition().y - _gm->WindowRadius);
     this->addChild(windowLayer, 100);
     
     // add button to the right corner
@@ -110,6 +111,10 @@ bool GameScene::init()
     contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 
+    /////////////////////////////
+    // add information bar
+    AddInformationBar();
+
     test();
 
     return true;
@@ -144,6 +149,13 @@ void GameScene::update(float dt){
         //playerPhysicsBody->setVelocity(Vec2(0,100));
     }
     
+    // Update distance
+    distance = Global::calDistance(enemy->getPosition(), player->getPosition());
+    lblDistance->setString(__String::createWithFormat("%d", distance)->getCString());
+    
+    // Update disclosure
+    disclosure = Global::calDisclosure(player->getPosition(), _gm->PlayerRadius, windowPosition, _gm->WindowRadius, _gm->CloudRadius);
+    lblDisclosure->setString(__String::createWithFormat("%d", disclosure)->getCString());
 }
 
 void GameScene::AddButton() {
@@ -322,27 +334,42 @@ void GameScene::randomizeEnemyMovingInfo() {
 
 void GameScene::movingWindow(Vec2 pos) {
     windowLayer->setPosition(pos.x + _gm->WindowRadius, pos.y - _gm->WindowRadius);
+    windowPosition = Vec2(windowLayer->getPosition().x - _gm->WindowRadius, windowLayer->getPosition().y - _gm->WindowRadius);
+}
+
+void GameScene::AddInformationBar() {
+    Label *lblTitle = Label::createWithTTF("Health: ", _gm->Font, _gm->FontSize);
+    lblTitle->setPosition(Vec2(10 + lblTitle->getContentSize().width / 2, visibleSize.height - lblTitle->getContentSize().height / 2));
+    this->addChild(lblTitle, 999);
+    lblPlayerHealth = Label::createWithTTF(__String::createWithFormat("%d%%", playerHealth)->getCString(), _gm->Font, _gm->FontSize);
+    lblPlayerHealth->setPosition(Vec2(10 + lblTitle->getPosition().x + lblTitle->getContentSize().width, lblTitle->getPosition().y));
+    this->addChild(lblPlayerHealth, 999);
+    
+    lblTitle = Label::createWithTTF("Disclosure: ", _gm->Font, _gm->FontSize);
+    lblTitle->setPosition(Vec2(10 + lblTitle->getContentSize().width / 2, lblPlayerHealth->getPosition().y - lblTitle->getContentSize().height));
+    this->addChild(lblTitle, 999);
+    lblDisclosure = Label::createWithTTF(__String::createWithFormat("%d%%", disclosure)->getCString(), _gm->Font, _gm->FontSize);
+    lblDisclosure->setPosition(Vec2(10 + lblTitle->getPosition().x + lblTitle->getContentSize().width, lblTitle->getPosition().y));
+    this->addChild(lblDisclosure, 999);
+    
+    lblTitle = Label::createWithTTF("Distance: ", _gm->Font, _gm->FontSize);
+    lblTitle->setPosition(Vec2(10 + lblTitle->getContentSize().width / 2, lblDisclosure->getPosition().y - lblTitle->getContentSize().height));
+    this->addChild(lblTitle, 999);
+    lblDistance = Label::createWithTTF(__String::createWithFormat("%d", distance)->getCString(), _gm->Font, _gm->FontSize);
+    lblDistance->setPosition(Vec2(10 + lblTitle->getPosition().x + lblTitle->getContentSize().width, lblTitle->getPosition().y));
+    this->addChild(lblDistance, 999);
+    
+    lblTitle = Label::createWithTTF("Enemy: ", _gm->Font, _gm->FontSize);
+    lblTitle->setPosition(Vec2(visibleSize.width - 10 - lblTitle->getContentSize().width / 2 - lblPlayerHealth->getContentSize().width, lblPlayerHealth->getPosition().y - lblTitle->getContentSize().height));
+    this->addChild(lblTitle, 999);
+    lblEnemyHealth = Label::createWithTTF(__String::createWithFormat("%d%%", enemyHealth)->getCString(), _gm->Font, _gm->FontSize);
+    lblEnemyHealth->setPosition(Vec2(10 + lblTitle->getPosition().x + lblTitle->getContentSize().width, lblTitle->getPosition().y));
+    this->addChild(lblEnemyHealth, 999);
+    
 }
 
 void GameScene::test() {
-    //test overlay
-    auto enemy1 = Sprite::create(_gm->BossImage);
-    enemy1->setScale(0.5f, 0.5f);
-    enemy1->setPosition(Vec2(visibleSize.width/2 + origin.x + 200, visibleSize.height/2 + origin.y));
-//    enemy1->setBlendFunc(cocos2d::BlendFunc::DISABLE);
-//    auto enemyPhysicsBody1 = PhysicsBody::createCircle(enemy1->getContentSize().width/2, PhysicsMaterial(0.0f, 1.0f, 0.0f));
-//    enemyPhysicsBody1->setGravityEnable(false);
-//    enemyPhysicsBody1->setCollisionBitmask(3);
-//    enemyPhysicsBody1->setContactTestBitmask(true);
-//    enemy1->setPhysicsBody(enemyPhysicsBody1);
-    this->addChild(enemy1);
-//    auto fadeOut = FadeOut::create(1.0f);
-//    enemy1->runAction(fadeOut);
+    //test information bar
     
-//    auto enemy2 = Sprite::create(_gm->EnemyImage);
-//    enemy2->setScale(0.5f, 0.5f);
-//    enemy2->setPosition(Vec2(visibleSize.width/2 + origin.x + 200, visibleSize.height/2 + origin.y));
-//    BlendFunc bf = { GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
-//    enemy2->setBlendFunc(bf);
-//    this->addChild(enemy2);
+    
 }

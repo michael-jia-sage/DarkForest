@@ -31,16 +31,21 @@ private:
     SneakyJoystick *leftJoystick;
     SneakyButton *attackButton;
     Sprite *windowLayer, *player, *enemy, *bullet, *dotCircle;
+    Label *lblPlayerHealth, *lblDisclosure, *lblDistance, *lblEnemyHealth;
     PhysicsBody *playerPhysicsBody, *enemyPhysicsBody, *playerBulletPhysicsBody, *enemyBulletPhysicsBody;
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    Vec2 windowPosition;
     int enemyMovingSpeed, enemyMoveToX, enemyMoveToY;
+    int playerHealth = 100, disclosure = 0, distance = 0, enemyHealth = 100;
+    int playerDisclosure = 0;
     float enemyMovingDuration;
     
     void SetPhysicsWorld(cocos2d::PhysicsWorld *world) { sceneWorld = world; };
     void Fire();
     void AddButton();
     void AddJoystick();
+    void AddInformationBar();
     
     void removeSprite(Sprite *sprite);
     bool onContactBegin (cocos2d::PhysicsContact &contact);
