@@ -64,17 +64,17 @@ bool GameScene::init()
     });
     enemy->getEventDispatcher()->addEventListenerWithFixedPriority(_listener, 30);
     
-    auto enemy1 = Sprite::create(_gm->BossImage);
-    enemy1->setScale(0.5f, 0.5f);
-    enemy1->setPosition(Vec2(visibleSize.width/2 + origin.x + 200, visibleSize.height/2 + origin.y));
-    this->addChild(enemy1, 95);
+    boss = Sprite::create(_gm->BossImage);
+    boss->setScale(0.5f, 0.5f);
+    boss->setPosition(Vec2(visibleSize.width/2 + origin.x + 200, visibleSize.height/2 + origin.y));
+    this->addChild(boss, 95);
     
     /////////////////////////////
     // add window layer
     windowLayer = Sprite::create(_gm->WindowImage);
     windowLayer->setScale(2.0f, 2.0f);
     windowLayer->setPosition(Vec2(0, visibleSize.height));
-    windowPosition = Vec2(windowLayer->getPosition().x - _gm->WindowRadius, windowLayer->getPosition().y - _gm->WindowRadius);
+    windowPosition = Vec2(windowLayer->getPosition().x - Global::WindowRadius, windowLayer->getPosition().y - Global::WindowRadius);
     this->addChild(windowLayer, 100);
     
     // add button to the right corner
@@ -156,8 +156,8 @@ void GameScene::update(float dt){
     lblDistance->setString(__String::createWithFormat("%d", distance)->getCString());
     
     // Update disclosure
-    disclosure = Global::calDisclosure(enemy->getPosition(), _gm->PlayerRadius, windowPosition, _gm->WindowRadius, _gm->CloudRadius);
-    lblDisclosure->setString(__String::createWithFormat("%d", disclosure)->getCString());
+//    disclosure = Global::calDisclosure(enemy->getPosition(), _gm->PlayerRadius, windowPosition, Global::WindowRadius, Global::CloudRadius);
+//    lblDisclosure->setString(__String::createWithFormat("%d", disclosure)->getCString());
 }
 
 void GameScene::AddButton() {
@@ -280,6 +280,10 @@ void GameScene::Fire() {
         Sequence *tailFlySequence = Sequence::create(tailJumpTo, CallFuncN::create(std::bind(&GameScene::onMotionStreakArrived, this, motionstreak)), NULL);
         motionstreak->runAction(tailFlySequence);
         
+        //check if any damage
+//        enemyHealth -= Global::calDamage(enemy->getPosition(), Global::EnemyRadius, touchPos);
+//        lblEnemyHealth->setString(__String::createWithFormat("%d%%", enemyHealth)->getCString());
+        
         _gm->setCanFire(false);
     };
     
@@ -306,6 +310,9 @@ void GameScene::onBulletArrived(Sprite *item, bool resetCanFire) {
     item->runAction(Sequence::create(CallFuncN::create(std::bind(&GameScene::movingWindow, this, item->getPosition())),
                                      scaleTo, fadeOut, CallFuncN::create(std::bind(&GameScene::removeSprite, this, item)),
                                       NULL));
+    enemyHealth -= Global::calDamage(item->getPosition(), boss->getPosition(), Global::BossRadius);
+    lblEnemyHealth->setString(__String::createWithFormat("%d%%", enemyHealth)->getCString());
+    
     if (resetCanFire)
         _gm->setCanFire(true);
 }
@@ -335,8 +342,8 @@ void GameScene::randomizeEnemyMovingInfo() {
 }
 
 void GameScene::movingWindow(Vec2 pos) {
-    windowLayer->setPosition(pos.x + _gm->WindowRadius, pos.y - _gm->WindowRadius);
-    windowPosition = Vec2(windowLayer->getPosition().x - _gm->WindowRadius, windowLayer->getPosition().y - _gm->WindowRadius);
+    windowLayer->setPosition(pos.x + Global::WindowRadius, pos.y - Global::WindowRadius);
+    windowPosition = Vec2(windowLayer->getPosition().x - Global::WindowRadius, windowLayer->getPosition().y - Global::WindowRadius);
 }
 
 void GameScene::AddInformationBar() {
@@ -373,7 +380,7 @@ void GameScene::AddInformationBar() {
 void GameScene::test() {
     //test information bar
     
-    disclosure = Global::calDisclosure(enemy->getPosition(), _gm->PlayerRadius, windowPosition, _gm->WindowRadius, _gm->CloudRadius);
+    disclosure = Global::calDisclosure(enemy->getPosition(), _gm->PlayerRadius, windowPosition, Global::WindowRadius, Global::CloudRadius);
     lblDisclosure->setString(__String::createWithFormat("%d", disclosure)->getCString());
 
 }

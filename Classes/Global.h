@@ -12,6 +12,7 @@ public:
     static Global* getInstance();
     static float calDistance(cocos2d::Vec2 p1, cocos2d::Vec2 p2);
     static int calDisclosure(cocos2d::Vec2 item_pos, int item_radius, cocos2d::Vec2 window_pos, int window_radius, int cloud_radius);
+    static int calDamage(cocos2d::Vec2 bullet_pos, cocos2d::Vec2 item_pos, int item_radius);
     
     //images
     const std::string PlayerImage = "Player.png";
@@ -26,10 +27,12 @@ public:
     const std::string JoystickButtonImage = "JoystickButton.png";
     const std::string WhiteTextureImage = "whiteTexture.png";
     const std::string WindowImage = "hole.png";
-    const int WindowRadius = 25;
-    const int CloudRadius = 50;
-    const int PlayerRadius = 25;
-    const int EnemyRadius = 25;
+    static const int WindowRadius = 25;
+    static const int BulletRadius = 20;
+    static const int CloudRadius = 50;
+    static const int PlayerRadius = 25;
+    static const int EnemyRadius = 25;
+    static const int BossRadius = 25;
     //const std::string Image = ".png";
     
     //font and sizes

@@ -30,7 +30,7 @@ private:
     cocos2d::PhysicsWorld *sceneWorld;
     SneakyJoystick *leftJoystick;
     SneakyButton *attackButton;
-    Sprite *windowLayer, *player, *enemy, *bullet, *dotCircle;
+    Sprite *windowLayer, *player, *enemy, *boss, *bullet, *dotCircle;
     Label *lblPlayerHealth, *lblDisclosure, *lblDistance, *lblEnemyHealth;
     PhysicsBody *playerPhysicsBody, *enemyPhysicsBody, *playerBulletPhysicsBody, *enemyBulletPhysicsBody;
     Size visibleSize = Director::getInstance()->getVisibleSize();
