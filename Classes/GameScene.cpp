@@ -310,7 +310,13 @@ void GameScene::onBulletArrived(Sprite *item, bool resetCanFire) {
     item->runAction(Sequence::create(CallFuncN::create(std::bind(&GameScene::movingWindow, this, item->getPosition())),
                                      scaleTo, fadeOut, CallFuncN::create(std::bind(&GameScene::removeSprite, this, item)),
                                       NULL));
-    enemyHealth -= Global::calDamage(item->getPosition(), boss->getPosition(), Global::BossRadius);
+    int damage = Global::calDamage(item->getPosition(), enemy->getPosition(), Global::BossRadius);
+    if (damage < enemyHealth) {
+        enemyHealth -= damage;
+    } else {
+        enemyHealth = 0;
+        //Game winning
+    }
     lblEnemyHealth->setString(__String::createWithFormat("%d%%", enemyHealth)->getCString());
     
     if (resetCanFire)
